@@ -10,6 +10,8 @@ public interface WssMessageInProcessor extends ManagedProcessorFunction {
 
     public static WssMessageInProcessor get() {
         return e -> {
+            // TODO Message parts: session ID, command, payload
+            // TODO Inbound command mapping
             e.stringValue(COMPONENT).ifPresent(System.out::println);
             return e.assignComponent(Component.Core.EXPIRED);
         };

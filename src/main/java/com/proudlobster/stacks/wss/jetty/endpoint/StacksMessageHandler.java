@@ -20,6 +20,7 @@ public interface StacksMessageHandler extends MessageHandler.Whole<String> {
                 .map(m -> stacks.$().createEntitiesFromTemplate("wss-inbound-message", m))
                 .orElseThrow(Fallible.of("Message is badly formed or the session ID does not match: " + msg))
                 .commit();
+
     }
 
 }
