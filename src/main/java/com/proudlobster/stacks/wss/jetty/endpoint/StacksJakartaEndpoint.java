@@ -34,14 +34,19 @@ public class StacksJakartaEndpoint extends Endpoint {
     public void onOpen(Session session, EndpointConfig config) {
         final Long sessionId = stacks.nextId();
 
-        // Create entity for session.
-        stacks.$().createEntitiesFromTemplate("wss-new-session", sessionId).commit();
-
         // Store session.
         sessionStorage.register(sessionId, session);
 
+        // Create entity for session.
+        stacks.$().createEntitiesFromTemplate("wss-new-session", sessionId).commit();
+
         // Assign message handler.
         session.addMessageHandler(StacksMessageHandler.get(stacks, sessionId));
+    }
+
+    @Override
+    public void onError(Session session, Throwable thr) {
+        thr.printStackTrace();
     }
 
 }

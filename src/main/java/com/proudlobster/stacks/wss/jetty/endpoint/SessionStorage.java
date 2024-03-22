@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.proudlobster.stacks.Fallible;
+import com.proudlobster.stacks.ecp.ManagedEntity;
+import com.proudlobster.stacks.wss.jetty.WssComponent;
 
 import jakarta.websocket.Session;
 
@@ -11,7 +13,8 @@ import jakarta.websocket.Session;
 public interface SessionStorage {
 
     public static SessionStorage get() {
-        return () -> new ConcurrentHashMap<>();
+        final Map<Long, Session> m = new ConcurrentHashMap<>();
+        return () -> m;
     }
 
     Map<Long, Session> map();
@@ -23,4 +26,10 @@ public interface SessionStorage {
     default void sendMessage(final Long sessionId, final String message) {
         Fallible.attemptRun(() -> map().get(sessionId).getBasicRemote().sendText(message));
     }
+
+    default void sendMessage(final ManagedEntity message) {
+        sendMessage(message.referenceEntity(WssComponent.WSS_TO_SESSION).get().identifier(),
+                message.stringValue(WssComponent.WSS_MESSAGE_OUT).get());
+    }
+
 }

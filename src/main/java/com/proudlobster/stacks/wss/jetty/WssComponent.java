@@ -8,8 +8,10 @@ import com.proudlobster.stacks.structure.Couple;
 public enum WssComponent implements Component {
     WSS_SESSION(DataType.NONE),
     WSS_NEW(DataType.NONE),
-    WSS_MESSAGE(DataType.STRING),
-    WSS_FROM_SESSION(DataType.REFERENCE);
+    WSS_MESSAGE_IN(DataType.STRING),
+    WSS_MESSAGE_OUT(DataType.STRING),
+    WSS_FROM_SESSION(DataType.REFERENCE),
+    WSS_TO_SESSION(DataType.REFERENCE);
 
     Couple<String> couple;
 
