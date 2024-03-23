@@ -10,8 +10,9 @@ public enum WssComponent implements Component {
     WSS_NEW(DataType.NONE),
     WSS_MESSAGE_IN(DataType.STRING),
     WSS_MESSAGE_OUT(DataType.STRING),
-    WSS_FROM_SESSION(DataType.REFERENCE),
-    WSS_TO_SESSION(DataType.REFERENCE);
+    WSS_SESSION_REF(DataType.REFERENCE),
+    WSS_COMMAND(DataType.STRING),
+    WSS_PAYLOAD(DataType.STRING);
 
     Couple<String> couple;
 

@@ -1,5 +1,7 @@
 package com.proudlobster.stacks.wss.jetty;
 
+import java.util.Map;
+
 import com.proudlobster.stacks.ecp.Component;
 import com.proudlobster.stacks.ecp.ManagedProcessor.ManagedProcessorFunction;
 
@@ -8,12 +10,11 @@ public interface WssMessageInProcessor extends ManagedProcessorFunction {
 
     public static Component COMPONENT = WssComponent.WSS_MESSAGE_IN;
 
-    public static WssMessageInProcessor get() {
+    public static WssMessageInProcessor get(final Map<String, ManagedProcessorFunction> commandSubprocessors) {
         return e -> {
-            // TODO Message parts: session ID, command, payload
-            // TODO Inbound command mapping
-            e.stringValue(COMPONENT).ifPresent(System.out::println);
-            return e.assignComponent(Component.Core.EXPIRED);
+            // TODO unknown commands
+            return commandSubprocessors.get(e.stringValue(WssComponent.WSS_COMMAND).get()).apply(e)
+                    .andThen(e.assignComponent(Component.Core.EXPIRED));
         };
     }
 

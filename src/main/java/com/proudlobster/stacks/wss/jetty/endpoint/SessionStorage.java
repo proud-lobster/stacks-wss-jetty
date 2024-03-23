@@ -28,7 +28,7 @@ public interface SessionStorage {
     }
 
     default void sendMessage(final ManagedEntity message) {
-        sendMessage(message.referenceEntity(WssComponent.WSS_TO_SESSION).get().identifier(),
+        sendMessage(message.referenceEntity(WssComponent.WSS_SESSION_REF).get().identifier(),
                 message.stringValue(WssComponent.WSS_MESSAGE_OUT).get());
     }
 
